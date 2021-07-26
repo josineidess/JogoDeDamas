@@ -1,29 +1,31 @@
+var p = document.getElementById("pteste");
+var pecas = {};
 var troca = false;
-var pecas = []
+
 var cont = 0;
-function create_table() {
-  
-    document.getElementById("inicio").setAttribute("hidden", "true");
-    let info = document.getElementById("informacoes");
-    info.setAttribute("border","1");
-    document.getElementById("jogador").innerHTML = "Jogador"
-    document.getElementById("nivel").innerHTML = "Nivel";
-    document.getElementById("tempo").innerHTML = "Hora";
-    
+console.log(pecas);
 
-    const table = document.createElement("table");
-    table.setAttribute('class', 'tab');
-    const tabelaBody = document.createElement("tbody");
-    table.style.padding="25px";
-   
-    //desenha tabela
-    for (var i = 0; i < 8; i++) {
+function muda_cor() {
+    p.style.getPropertyValue("color") == "red" ?
+        (p.style.color = "green") :
+        (p.style.color = "red");
+}
+
+function gerar_tabela() {
+    var body = document.getElementsByTagName("body")[0];
+
+    var tbl = document.createElement("table");
+    var tblBody = document.createElement("tbody");
+
+    for (var i = 0; i <= 7; i++) {
         var row = document.createElement("tr");
-        for (var j = 0; j < 8; j++) {
-            var cell = document.createElement("td");
-            cell.setAttribute("id", i + "" + j);
 
-            //sistema de cores xadrez
+        for (var j = 0; j <= 7; j++) {
+            //casas
+            var cell = document.createElement("td");
+            cell.style.height = "20px";
+            cell.style.width = "20px";
+
             if (!troca) {
                 if (j % 2 == 0) {
                     cell.style.backgroundColor = "rgba(17, 29, 82, 0.87)";
@@ -37,84 +39,68 @@ function create_table() {
                     cell.style.color = "white";
                 }
             }
-  
-            cell.style.height = "35px";
-            cell.style.width = "35px";
-
             //peças
-            var button = document.createElement("button");
-            button.setAttribute("id","b"+ i + "" + j);
-            var id = cell.getAttribute("id");
-            
-            button.style.borderRadius = "25px";
-            button.style.width = "35px";
-            button.style.height = "35px";
-            
+            var btn = document.createElement("BUTTON");
+            btn.style.height = "20px";
+            btn.style.width = "20px";
+            btn.style.borderRadius = "15px";
+            //esconder peças que não devem aparecer
+
             if (i >= 0 && i <= 2) {
                 if (troca) {
                     if (j % 2 == 0) {
-                        button.setAttribute("hidden", "true");
+                        btn.setAttribute("hidden", "true");
                     }
                 } else {
                     if (j % 2 == 1) {
-                        button.setAttribute("hidden", "true");
+                        btn.setAttribute("hidden", "true");
                     }
                 }
             }
-
             if (i >= 3 && i <= 4) {
-                button.setAttribute("hidden", "true");
+                btn.setAttribute("hidden", "true");
             }
 
+            //definir cor
             if (i >= 5 && i <= 7) {
                 if (troca) {
                     if (j % 2 == 1) {
-                        button.style.backgroundColor = "black";
+                        btn.style.backgroundColor = "black";
                     } else {
-                        button.setAttribute("hidden", "true");
+                        btn.setAttribute("hidden", "true");
                     }
                 } else {
                     if (j % 2 == 0) {
-                        button.style.backgroundColor = "black";
+                        btn.style.backgroundColor = "black";
                     } else {
-                        button.setAttribute("hidden", "true");
+                        btn.setAttribute("hidden", "true");
                     }
                 }
-
             }
 
-            pecas.push({id : {
-                "casa": document.getElementById(id),
-                "button": document.getElementById("b"+id),
-            }});
-          
-            //document.getElementById(id).addEventListener("onclick", click_b(pecas[id].button))
-            table.setAttribute("border", "5");
-            cell.appendChild(button);
-            row.appendChild(cell);
-            
+            pecas[cont] = {
+                button: btn,
+                cor: btn.getAttribute.color,
+                visivel: btn.getAttribute.hidden,
+            };
 
+            cont += 1; //contador de casas
+            cell.appendChild(btn);
+            row.appendChild(cell);
         }
-      
         troca = !troca;
-        tabelaBody.appendChild(row);
+        tblBody.appendChild(row);
     }
 
-    table.appendChild(tabelaBody);
-    document.getElementById("game").appendChild(table);
-    
+    tbl.appendChild(tblBody);
+    body.appendChild(tbl);
+    tbl.setAttribute("border", "2");
 }
 
+function acao(element) {
+    for (let i = 0; i <= 7; i++) {
+        if (pecas[i].button == element) {
 
-
-function click_b(){
-  let variavel = ""
-  for(let i = 0, j = 0; i < pecas.length;j++){
-    variavel += i + "" + j + " : " + pecas[i].id.button + "\n"
-    if(j == 7){
-      i++;
-      j = 0
+        }
     }
-  }
-  alert(variavel)
 }
